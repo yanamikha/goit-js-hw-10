@@ -2,7 +2,6 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 const options = {
   enableTime: true,
@@ -49,6 +48,7 @@ let hoursField = document.querySelector('span[data-hours]');
 let minutesField = document.querySelector('span[data-minutes]');
 let secondsField = document.querySelector('span[data-seconds]');
 let datePicker = flatpickr('#datetime-picker', options);
+startButton.disabled = true;
 startButton.addEventListener('click', () => {
   startButton.disabled = true;
   datePicker.input.disabled = true;

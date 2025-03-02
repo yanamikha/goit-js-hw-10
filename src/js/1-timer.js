@@ -3,6 +3,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 const options = {
   enableTime: true,
@@ -15,8 +16,8 @@ const options = {
       iziToast.show({
         message: 'Please choose a date in the future',
         theme: 'dark',
-        backgroundColor: 'red',
-        icon: 'fa-brands fa-twitter'
+        backgroundColor: '#EF4040',
+        icon: 'fa-solid fa-triangle-exclamation'
       });
       startButton.disabled = true;
     } else {

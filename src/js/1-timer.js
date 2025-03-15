@@ -5,6 +5,7 @@ import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 
+let userSelectedDate;
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -39,32 +40,34 @@ function convertMs(ms) {
   const seconds = addLeadingZero(
     Math.floor((((ms % day) % hour) % minute) / second)
   );
-
   return { days, hours, minutes, seconds };
 }
 
-let userSelectedDate;
 let startButton = document.querySelector('button');
 let daysField = document.querySelector('span[data-days]');
 let hoursField = document.querySelector('span[data-hours]');
 let minutesField = document.querySelector('span[data-minutes]');
 let secondsField = document.querySelector('span[data-seconds]');
 let datePicker = flatpickr('#datetime-picker', options);
+let intervalId;
 startButton.disabled = true;
-startButton.addEventListener('click', () => {
+let startTimer = function () {
   startButton.disabled = true;
   datePicker.input.disabled = true;
-  const promise = new Promise((resolve, reject) => {
-    setInterval(() => {
-      let datesDifference = convertMs(userSelectedDate - Date.now());
-      daysField.textContent = datesDifference.days;
-      hoursField.textContent = datesDifference.hours;
-      minutesField.textContent = datesDifference.minutes;
-      secondsField.textContent = datesDifference.seconds;
-    }, 1000);
+  intervalId = setInterval(() => {
+    let timerValue = userSelectedDate - Date.now();
+    if (timerValue <= 0) {
+      clearInterval(intervalId);
+      intervalId = 0;
+      startButton.disabled = false;
+      datePicker.input.disabled = false;
+      return;
+    }
+    let datesDifference = convertMs(timerValue);
+    daysField.textContent = datesDifference.days;
+    hoursField.textContent = datesDifference.hours;
+    minutesField.textContent = datesDifference.minutes;
+    secondsField.textContent = datesDifference.seconds;
   });
-  promise.finally(() => {
-    startButton.disabled = false;
-    datePicker.input.disabled = false;
-  });
-});
+};
+startButton.addEventListener('click', startTimer);

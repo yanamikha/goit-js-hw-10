@@ -59,7 +59,6 @@ let startTimer = function () {
     if (timerValue <= 0) {
       clearInterval(intervalId);
       intervalId = 0;
-      startButton.disabled = false;
       datePicker.input.disabled = false;
       return;
     }
@@ -68,6 +67,6 @@ let startTimer = function () {
     hoursField.textContent = datesDifference.hours;
     minutesField.textContent = datesDifference.minutes;
     secondsField.textContent = datesDifference.seconds;
-  });
+  }, 1000);
 };
 startButton.addEventListener('click', startTimer);
